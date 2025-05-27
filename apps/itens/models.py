@@ -13,7 +13,7 @@ class Item(models.Model):
     fabricante = models.ForeignKey('Fabricante', on_delete=models.CASCADE)
     nome = models.CharField(max_length=50, unique=True, null=False, blank=False)
     partnumber = models.CharField(max_length=50, unique=True,)
-    img = models.ImageField(upload_to='itens/')
+    img = models.ImageField(upload_to='itens/', blank=True)
     quantidade = models.PositiveIntegerField(default=0)
     endereco = models.CharField(max_length=50, unique=True, null=False, blank=False)
     disponivel = models.BooleanField(default=False)
@@ -36,6 +36,6 @@ class NotaFiscal(models.Model):
     class Meta:
         verbose_name = "Nota Fiscal"
         verbose_name_plural = "Notas Fiscais"
-        
+
     def __str__(self):
          return f"{self.numero_de_nota}"

@@ -6,10 +6,12 @@ from django.core.exceptions import ValidationError
 
 class Saida(models.Model):
 
+    destino = models.ForeignKey('Destinatario', on_delete=models.CASCADE)
     responsavel = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     data = models.DateTimeField(auto_now_add=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
+    
 
     def __str__(self):
          return f"{self.data:%Y-%m-%d %H:%M} — {self.item.nome} (-{self.quantidade})"
@@ -21,3 +23,9 @@ class Saida(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()  # chama clean() para validar antes de salvar
         super().save(*args, **kwargs)        
+
+class Destinatario(models.Model):
+    destino = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.destino
