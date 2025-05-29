@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
+from .validators import validar_tamanho_imagem
 
 # Create your models here.
 class Fabricante(models.Model):
@@ -16,7 +17,7 @@ class Item(models.Model):
     nome = models.CharField(max_length=50, unique=True, null=False, blank=False)
     modelo = models.CharField(max_length=50, unique=False, null=False, blank=False)
     partnumber = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    img = models.ImageField(upload_to='itens/', blank=True)
+    img = models.ImageField(upload_to='itens/', blank=True, validators=[validar_tamanho_imagem])
     quantidade = models.PositiveIntegerField(default=0)
     endereco = models.CharField(max_length=50, unique=True, null=False, blank=False)
     disponivel = models.BooleanField(default=False)
