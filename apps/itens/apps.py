@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 
-
-class ItensConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
+class SeuAppConfig(AppConfig):
     name = 'itens'
+
+    def ready(self):
+        import itens.signals  # importa e conecta os signals

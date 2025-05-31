@@ -35,8 +35,8 @@ class SaidaInline(admin.TabularInline):
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     search_fields = ['fabricante__nome_do_fabricante', 'nome',]
-    list_display = ['sku', 'nome', 'modelo', 'partnumber', 'fabricante' ,'quantidade', 'disponivel', 'endereco' ,'preview',  'valor_atual', 'total_estoque_admin']
-    list_filter = ['sku', 'disponivel',  'modelo', 'fabricante__nome_do_fabricante', 'nome', 'partnumber']
+    list_display = ['sku', 'nome', 'modelo', 'partnumber', 'fabricante' ,'quantidade', 'disponivel', 'endereco' ,'preview',  'valor_atual', 'total_estoque_admin', 'ultima_saida']
+    list_filter = ['sku', 'disponivel',  'modelo', 'fabricante__nome_do_fabricante', 'nome', 'partnumber', 'ultima_saida']
     inlines = [EntradaInline, SaidaInline, HistoricoValorItemInline]
     actions = ['exportar_para_excel']
 

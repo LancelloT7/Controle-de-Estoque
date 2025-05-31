@@ -8,7 +8,7 @@ from datetime import datetime
 
 @admin.register(Saida)
 class SaidaAdmin(admin.ModelAdmin):
-    list_display = ['data', 'item', 'quantidade', 'responsavel', 'destino']
+    list_display = ['data', 'item', 'quantidade', 'responsavel', 'destino', ]
     list_filter  = ['data', 'item', 'responsavel', 'destino']
     search_fields = ['item__nome', 'destino']
     date_hierarchy = 'data'

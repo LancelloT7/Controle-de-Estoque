@@ -2,6 +2,7 @@ from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
 from .validators import validar_tamanho_imagem
+from datetime import date
 
 # Create your models here.
 class Fabricante(models.Model):
@@ -12,6 +13,7 @@ class Fabricante(models.Model):
 
 class Item(models.Model):
 
+    ultima_saida = models.DateField(null=True, blank=True)
     sku = models.CharField(max_length=50, unique=False, null=False, blank=False)
     fabricante = models.ForeignKey('Fabricante', on_delete=models.CASCADE)
     nome = models.CharField(max_length=50, unique=True, null=False, blank=False)
@@ -22,6 +24,17 @@ class Item(models.Model):
     endereco = models.CharField(max_length=50, unique=True, null=False, blank=False)
     disponivel = models.BooleanField(default=False)
     valor_atual = models.DecimalField(decimal_places=2, max_digits=15, verbose_name="Valor Hoje")
+
+    def atualizar_dias_sem_saida(self):
+        if self.ultima_saida:
+            dias = (date.today() - self.ultima_saida).days
+        else:
+            dias = 0  # ou outro valor padrão
+
+        self.dias_sem_saida = dias
+        self.obsoleto = dias > 100
+        self.save(update_fields=["dias_sem_saida", "obsoleto"])
+        
 
     def total_estoque(self):
         return self.quantidade*self.valor_atual
